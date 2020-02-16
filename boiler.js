@@ -86,7 +86,7 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
       "compileOnSave": true,
       "extends": "./tsconfig.base.json",
       "files": [],
-      "references": tsConfigRefs
+      "references": tsConfigRefs.map(path => ({ path }))
     }
   })
 
