@@ -18,8 +18,25 @@ module.exports.setupBoiler = function ({ destDir }) {
     })
 }
 
-module.exports.installBoiler = function ({ destDir, files }) {
+module.exports.promptBoiler = function () {
+  return [{
+    type: "checkbox",
+    name: "tsBuildTypes",
+    message: "typescript build types",
+    choices: [
+      { name: "commonjs (cjs)", value: "cjs" },
+      { name: "es2015 (esm)", value: "esm" }
+    ],
+    default: function () {
+      return ["cjs"]
+    }
+  }]
+}
+
+module.exports.installBoiler = function ({ answers, destDir, files }) {
   let actions = []
+
+  console.log(answers)
   
   files.forEach(function (file) {
     if (file.name === "tsconfig.base.json") {
