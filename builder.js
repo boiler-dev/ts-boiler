@@ -9,7 +9,7 @@ module.exports.setupBoiler = function ({ destDir }) {
   return boiler
     .npm({ destDir, pkgNames })
     .then(function ({ code, out }) {
-      if (code === 1) {
+      if (code === 0) {
         console.log("✅ Installed npm modules:", pkgNames)
       } else {
         console.error("🚨 Failed to install npm modules:", pkgNames)
