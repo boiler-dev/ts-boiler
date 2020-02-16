@@ -34,9 +34,46 @@ module.exports.promptBoiler = function () {
 }
 
 module.exports.installBoiler = function ({ answers, destDir, files }) {
-  let actions = []
+  const actions = []
+  const tsConfigRefs = []
 
-  console.log(answers)
+  const oneType = answers.tsBuildTypes.length === 1
+
+  if (answers.tsBuildTypes.includes("cjs")) {
+    tsConfigRefs.push("./src/tsconfig" + (oneType ? "" : ".cjs") + ".json")
+    actions.push({
+      action: "write",
+      path: join(destDir, "src/tsconfig" + (oneType ? "" : ".cjs") + ".json"),
+      source: JSON.stringify({
+        "compilerOptions": {
+          "composite": true,
+          "module": "commonjs",
+          "outDir": "../dist" + (oneType ? "" : "/cjs"),
+          "rootDir": ".",
+          "target": "es5"
+        },
+        "extends": "../tsconfig.base.json"
+      })
+    })
+  }
+
+  if (answers.tsBuildTypes.includes("esm")) {
+    tsConfigRefs.push("./src/tsconfig" + (oneType ? "" : ".esm") + ".json")
+    actions.push({
+      action: "write",
+      path: join(destDir, "src/tsconfig" + (oneType ? "" : ".esm") + ".json"),
+      source: JSON.stringify({
+        "compilerOptions": {
+          "composite": true,
+          "module": "es2015",
+          "outDir": "../dist" + (oneType ? "" : "/esm"),
+          "rootDir": ".",
+          "target": "es5"
+        },
+        "extends": "../tsconfig-base.json"
+      })
+    })
+  }
   
   files.forEach(function (file) {
     if (file.name === "tsconfig.base.json") {
@@ -56,7 +93,7 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
         "compileOnSave": true,
         "extends": "./tsconfig.base.json",
         "files": [],
-        "references": []
+        "references": tsConfigRefs
       },
       null,
       2
