@@ -2,20 +2,8 @@ const boiler = require("boiler-dev")
 const { join } = require("path")
 
 module.exports.setupBoiler = function ({ destDir }) {
-  const pkgNames = [
-    "typescript",
-    "@typescript-eslint/eslint-plugin",
-    "@typescript-eslint/parser"
-  ]
+  const pkgNames = ["typescript"]
   return boiler.npm.install(destDir, pkgNames)
-    .then(function ({ code, out }) {
-      if (code === 0) {
-        console.log("✅ Installed npm modules:", pkgNames)
-      } else {
-        console.error("🚨 Failed to install npm modules:", pkgNames)
-        console.error(out)
-      }
-    })
 }
 
 module.exports.promptBoiler = function () {
