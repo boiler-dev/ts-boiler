@@ -6,8 +6,7 @@ module.exports.setupBoiler = function ({ destDir }) {
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser"
   ]
-  return boiler
-    .npm({ destDir, pkgNames })
+  return boiler.npm.install({ destDir, pkgNames })
     .then(function ({ code, out }) {
       if (code === 0) {
         console.log("✅ Installed npm modules:", pkgNames)
