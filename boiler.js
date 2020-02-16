@@ -19,13 +19,32 @@ module.exports.setupBoiler = function ({ destDir }) {
 }
 
 module.exports.installBoiler = function ({ destDir, files }) {
-  return files.map(function (file) {
+  let actions = []
+  
+  files.forEach(function (file) {
     if (file.name === "tsconfig.base.json") {
-      return {
+      actions.push({
         action: "write",
         path: join(destDir, file.name),
         source: file.source,
-      }
+      })
     }
   })
+
+  actions.push({
+    action: "write",
+    path: join(destDir, "tsconfig.json"),
+    source: JSON.stringify(
+      {
+        "compileOnSave": true,
+        "extends": "./tsconfig.base.json",
+        "files": [],
+        "references": []
+      },
+      null,
+      2
+    )
+  })
+
+  return actions
 }
