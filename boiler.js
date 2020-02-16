@@ -44,16 +44,20 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
     actions.push({
       action: "write",
       path: join(destDir, "src/tsconfig" + (oneType ? "" : ".cjs") + ".json"),
-      source: JSON.stringify({
-        "compilerOptions": {
-          "composite": true,
-          "module": "commonjs",
-          "outDir": "../dist" + (oneType ? "" : "/cjs"),
-          "rootDir": ".",
-          "target": "es5"
+      source: JSON.stringify(
+        {
+          "compilerOptions": {
+            "composite": true,
+            "module": "commonjs",
+            "outDir": "../dist" + (oneType ? "" : "/cjs"),
+            "rootDir": ".",
+            "target": "es5"
+          },
+          "extends": "../tsconfig.base.json"
         },
-        "extends": "../tsconfig.base.json"
-      })
+        null,
+        2
+      )
     })
   }
 
@@ -62,16 +66,20 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
     actions.push({
       action: "write",
       path: join(destDir, "src/tsconfig" + (oneType ? "" : ".esm") + ".json"),
-      source: JSON.stringify({
-        "compilerOptions": {
-          "composite": true,
-          "module": "es2015",
-          "outDir": "../dist" + (oneType ? "" : "/esm"),
-          "rootDir": ".",
-          "target": "es5"
+      source: JSON.stringify(
+        {
+          "compilerOptions": {
+            "composite": true,
+            "module": "es2015",
+            "outDir": "../dist" + (oneType ? "" : "/esm"),
+            "rootDir": ".",
+            "target": "es5"
+          },
+          "extends": "../tsconfig-base.json"
         },
-        "extends": "../tsconfig-base.json"
-      })
+        null,
+        2
+      )
     })
   }
   
