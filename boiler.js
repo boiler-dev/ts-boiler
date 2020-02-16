@@ -1,4 +1,5 @@
 const boiler = require("boiler-dev")
+const { join } = require("path")
 
 module.exports.setupBoiler = function ({ destDir }) {
   const pkgNames = [
