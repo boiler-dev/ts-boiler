@@ -3,7 +3,7 @@ const { join } = require("path")
 
 module.exports.setupBoiler = function ({ destDir }) {
   const pkgNames = ["typescript"]
-  return boiler.npm.install(destDir, pkgNames)
+  return boiler.npm.install(destDir, pkgNames, { saveDev: true })
 }
 
 module.exports.promptBoiler = function () {
