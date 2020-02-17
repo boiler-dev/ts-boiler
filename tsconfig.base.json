@@ -5,6 +5,9 @@
     "baseUrl": ".",
     "declaration": true,
     "esModuleInterop": true,
+    "lib": [
+      "es2015"
+    ],
     "moduleResolution": "node",
     "sourceMap": true
   }
