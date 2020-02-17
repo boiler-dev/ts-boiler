@@ -90,5 +90,16 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
     }
   })
 
+  actions.push({
+    action: "merge",
+    path: join(destDir, "package.json"),
+    source: {
+      scripts: {
+        build: "tsc -b",
+        watch: "tsc -b -w"
+      }
+    }
+  })
+
   return actions
 }
