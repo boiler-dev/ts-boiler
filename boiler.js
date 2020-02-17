@@ -1,27 +1,35 @@
 const boiler = require("boiler-dev")
 const { join } = require("path")
 
-module.exports.setupBoiler = function ({ destDir }) {
+module.exports.setupBoiler = function({ destDir }) {
   const pkgNames = ["@types/node", "typescript"]
-  return boiler.npm.install(destDir, pkgNames, { saveDev: true })
+  return boiler.npm.install(destDir, pkgNames, {
+    saveDev: true,
+  })
 }
 
-module.exports.promptBoiler = function () {
-  return [{
-    type: "checkbox",
-    name: "tsBuildTypes",
-    message: "typescript build types",
-    choices: [
-      { name: "commonjs (cjs)", value: "cjs" },
-      { name: "es2015 (esm)", value: "esm" }
-    ],
-    default: function () {
-      return ["cjs"]
-    }
-  }]
+module.exports.promptBoiler = function() {
+  return [
+    {
+      type: "checkbox",
+      name: "tsBuildTypes",
+      message: "typescript build types",
+      choices: [
+        { name: "commonjs (cjs)", value: "cjs" },
+        { name: "es2015 (esm)", value: "esm" },
+      ],
+      default: function() {
+        return ["cjs"]
+      },
+    },
+  ]
 }
 
-module.exports.installBoiler = function ({ answers, destDir, files }) {
+module.exports.installBoiler = function({
+  answers,
+  destDir,
+  files,
+}) {
   const actions = []
   const tsConfigRefs = []
 
@@ -31,20 +39,23 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
     const dotCjs = oneType ? "" : ".cjs"
 
     tsConfigRefs.push("./src/tsconfig" + dotCjs + ".json")
-    
+
     actions.push({
       action: "write",
-      path: join(destDir, "src/tsconfig" + dotCjs + ".json"),
+      path: join(
+        destDir,
+        "src/tsconfig" + dotCjs + ".json"
+      ),
       source: {
-        "compilerOptions": {
-          "composite": true,
-          "module": "commonjs",
-          "outDir": "../dist" + (oneType ? "" : "/cjs"),
-          "rootDir": ".",
-          "target": "es5"
+        compilerOptions: {
+          composite: true,
+          module: "commonjs",
+          outDir: "../dist" + (oneType ? "" : "/cjs"),
+          rootDir: ".",
+          target: "es5",
         },
-        "extends": "../tsconfig.base.json"
-      }
+        extends: "../tsconfig.base.json",
+      },
     })
   }
 
@@ -55,21 +66,24 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
 
     actions.push({
       action: "write",
-      path: join(destDir, "src/tsconfig" + dotEsm + ".json"),
+      path: join(
+        destDir,
+        "src/tsconfig" + dotEsm + ".json"
+      ),
       source: {
-        "compilerOptions": {
-          "composite": true,
-          "module": "es2015",
-          "outDir": "../dist" + (oneType ? "" : "/esm"),
-          "rootDir": ".",
-          "target": "es5"
+        compilerOptions: {
+          composite: true,
+          module: "es2015",
+          outDir: "../dist" + (oneType ? "" : "/esm"),
+          rootDir: ".",
+          target: "es5",
         },
-        "extends": "../tsconfig-base.json"
-      }
+        extends: "../tsconfig-base.json",
+      },
     })
   }
-  
-  files.forEach(function (file) {
+
+  files.forEach(function(file) {
     if (file.name === "tsconfig.base.json") {
       actions.push({
         action: "write",
@@ -83,11 +97,11 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
     action: "write",
     path: join(destDir, "tsconfig.json"),
     source: {
-      "compileOnSave": true,
-      "extends": "./tsconfig.base.json",
-      "files": [],
-      "references": tsConfigRefs.map(path => ({ path }))
-    }
+      compileOnSave: true,
+      extends: "./tsconfig.base.json",
+      files: [],
+      references: tsConfigRefs.map(path => ({ path })),
+    },
   })
 
   actions.push({
@@ -96,9 +110,9 @@ module.exports.installBoiler = function ({ answers, destDir, files }) {
     source: {
       scripts: {
         build: "tsc -b",
-        watch: "tsc -b -w"
-      }
-    }
+        watch: "tsc -b -w",
+      },
+    },
   })
 
   return actions
