@@ -2,7 +2,7 @@ const boiler = require("boiler-dev")
 const { join } = require("path")
 
 module.exports.setupBoiler = function ({ destDir }) {
-  const pkgNames = ["typescript"]
+  const pkgNames = ["@types/node", "typescript"]
   return boiler.npm.install(destDir, pkgNames, { saveDev: true })
 }
 
