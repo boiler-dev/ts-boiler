@@ -1,12 +1,4 @@
-const boiler = require("boiler-dev")
 const { join } = require("path")
-
-module.exports.setupBoiler = function({ destDir }) {
-  const pkgNames = ["@types/node", "typescript"]
-  return boiler.npm.install(destDir, pkgNames, {
-    saveDev: true,
-  })
-}
 
 module.exports.promptBoiler = function() {
   return [
@@ -113,6 +105,12 @@ module.exports.installBoiler = function({
         watch: "tsc -b -w",
       },
     },
+  })
+
+  actions.push({
+    action: "npmInstall",
+    dev: true,
+    source: ["@types/node", "typescript"]
   })
 
   return actions
