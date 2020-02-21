@@ -12,6 +12,9 @@
     "sourceMap": true,
     "types": [
       "node"
+    ],
+    "exclude": [
+      "**/tsignore/*.ts"
     ]
   }
 }
