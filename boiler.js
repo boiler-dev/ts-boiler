@@ -1,6 +1,6 @@
 const { join } = require("path")
 
-module.exports.promptBoiler = function() {
+module.exports.prompt = function() {
   return [
     {
       type: "checkbox",
@@ -17,10 +17,10 @@ module.exports.promptBoiler = function() {
   ]
 }
 
-module.exports.installBoiler = function({
+module.exports.generate = function({
   answers,
-  destDir,
   files,
+  rootDirPath,
 }) {
   const actions = []
   const tsConfigRefs = []
@@ -35,7 +35,7 @@ module.exports.installBoiler = function({
     actions.push({
       action: "write",
       path: join(
-        destDir,
+        rootDirPath,
         "src/tsconfig" + dotCjs + ".json"
       ),
       source: {
@@ -59,7 +59,7 @@ module.exports.installBoiler = function({
     actions.push({
       action: "write",
       path: join(
-        destDir,
+        rootDirPath,
         "src/tsconfig" + dotEsm + ".json"
       ),
       source: {
@@ -79,7 +79,7 @@ module.exports.installBoiler = function({
     if (file.name === "tsconfig.base.json") {
       actions.push({
         action: "write",
-        path: join(destDir, file.name),
+        path: join(rootDirPath, file.name),
         source: file.source,
       })
     }
@@ -87,7 +87,7 @@ module.exports.installBoiler = function({
 
   actions.push({
     action: "write",
-    path: join(destDir, "tsconfig.json"),
+    path: join(rootDirPath, "tsconfig.json"),
     source: {
       compileOnSave: true,
       extends: "./tsconfig.base.json",
@@ -98,7 +98,7 @@ module.exports.installBoiler = function({
 
   actions.push({
     action: "merge",
-    path: join(destDir, "package.json"),
+    path: join(rootDirPath, "package.json"),
     source: {
       scripts: {
         build: "tsc -b",
