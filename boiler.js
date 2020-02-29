@@ -20,7 +20,7 @@ module.exports.prompt = function() {
 module.exports.generate = function({
   answers,
   files,
-  rootDirPath,
+  cwdPath,
 }) {
   const actions = []
   const tsConfigRefs = []
@@ -35,7 +35,7 @@ module.exports.generate = function({
     actions.push({
       action: "write",
       path: join(
-        rootDirPath,
+        cwdPath,
         "src/tsconfig" + dotCjs + ".json"
       ),
       source: {
@@ -59,7 +59,7 @@ module.exports.generate = function({
     actions.push({
       action: "write",
       path: join(
-        rootDirPath,
+        cwdPath,
         "src/tsconfig" + dotEsm + ".json"
       ),
       source: {
@@ -79,7 +79,7 @@ module.exports.generate = function({
     if (file.name === "tsconfig.base.json") {
       actions.push({
         action: "write",
-        path: join(rootDirPath, file.name),
+        path: join(cwdPath, file.name),
         source: file.source,
       })
     }
@@ -87,7 +87,7 @@ module.exports.generate = function({
 
   actions.push({
     action: "write",
-    path: join(rootDirPath, "tsconfig.json"),
+    path: join(cwdPath, "tsconfig.json"),
     source: {
       compileOnSave: true,
       extends: "./tsconfig.base.json",
@@ -98,7 +98,7 @@ module.exports.generate = function({
 
   actions.push({
     action: "merge",
-    path: join(rootDirPath, "package.json"),
+    path: join(cwdPath, "package.json"),
     source: {
       scripts: {
         build: "tsc -b",
