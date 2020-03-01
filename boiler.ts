@@ -1,6 +1,7 @@
-const { join } = require("path")
+import { join } from "path"
+import { GenerateBoiler, PromptBoiler } from "boiler-dev"
 
-module.exports.prompt = function() {
+export const prompt: PromptBoiler = async () => {
   return [
     {
       type: "checkbox",
@@ -10,18 +11,16 @@ module.exports.prompt = function() {
         { name: "commonjs (cjs)", value: "cjs" },
         { name: "es2015 (esm)", value: "esm" },
       ],
-      default: function() {
-        return ["cjs"]
-      },
+      default: (): any => ["cjs"],
     },
   ]
 }
 
-module.exports.generate = function({
+export const generate: GenerateBoiler = async ({
   answers,
-  files,
   cwdPath,
-}) {
+  files,
+}) => {
   const actions = []
   const tsConfigRefs = []
 
@@ -110,7 +109,7 @@ module.exports.generate = function({
   actions.push({
     action: "npmInstall",
     dev: true,
-    source: ["@types/node", "typescript"]
+    source: ["@types/node", "typescript"],
   })
 
   return actions
