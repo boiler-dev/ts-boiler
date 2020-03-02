@@ -42,7 +42,7 @@ export const generate: GenerateBoiler = async ({
 
   const oneType = answers.tsBuildTypes.length === 1
 
-  tsConfigRefs.push("./src/tsconfig.json")
+  tsConfigRefs.push("./boiler/tsconfig.json")
 
   actions.push({
     action: "write",
