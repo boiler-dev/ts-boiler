@@ -1,5 +1,9 @@
 import { join } from "path"
-import { GenerateBoiler, PromptBoiler } from "boiler-dev"
+import {
+  GenerateBoiler,
+  PromptBoiler,
+  InstallBoiler,
+} from "boiler-dev"
 
 export const prompt: PromptBoiler = async () => {
   return [
@@ -14,6 +18,18 @@ export const prompt: PromptBoiler = async () => {
       default: (): any => ["cjs"],
     },
   ]
+}
+
+export const install: InstallBoiler = async () => {
+  const actions = []
+
+  actions.push({
+    action: "npmInstall",
+    dev: true,
+    source: ["@types/node", "typescript"],
+  })
+
+  return actions
 }
 
 export const generate: GenerateBoiler = async ({
@@ -104,12 +120,6 @@ export const generate: GenerateBoiler = async ({
         watch: "tsc -b -w",
       },
     },
-  })
-
-  actions.push({
-    action: "npmInstall",
-    dev: true,
-    source: ["@types/node", "typescript"],
   })
 
   return actions
