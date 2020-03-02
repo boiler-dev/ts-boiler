@@ -74,7 +74,7 @@ export const generate: GenerateBoiler = async ({
     })
   }
 
-  files.forEach(function(file) {
+  for (const file of files) {
     if (file.name === "tsconfig.base.json") {
       actions.push({
         action: "write",
@@ -82,7 +82,7 @@ export const generate: GenerateBoiler = async ({
         source: file.source,
       })
     }
-  })
+  }
 
   actions.push({
     action: "write",
