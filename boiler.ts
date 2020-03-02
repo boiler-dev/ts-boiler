@@ -42,6 +42,23 @@ export const generate: GenerateBoiler = async ({
 
   const oneType = answers.tsBuildTypes.length === 1
 
+  tsConfigRefs.push("./src/tsconfig.json")
+
+  actions.push({
+    action: "write",
+    path: join(cwdPath, "boiler/tsconfig.json"),
+    source: {
+      compilerOptions: {
+        composite: true,
+        module: "commonjs",
+        outDir: "../dist" + (oneType ? "" : "/cjs"),
+        rootDir: ".",
+        target: "es5",
+      },
+      extends: "../tsconfig.base.json",
+    },
+  })
+
   if (answers.tsBuildTypes.includes("cjs")) {
     const dotCjs = oneType ? "" : ".cjs"
 
