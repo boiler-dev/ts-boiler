@@ -74,7 +74,7 @@ export const generate: GenerateBoiler = async ({
         compilerOptions: {
           composite: true,
           module: "commonjs",
-          outDir: "../dist" + (oneType ? "" : "/cjs"),
+          outDir: "../dist/src",
           rootDir: ".",
           target: "es5",
         },
@@ -98,7 +98,7 @@ export const generate: GenerateBoiler = async ({
         compilerOptions: {
           composite: true,
           module: "es2015",
-          outDir: "../dist" + (oneType ? "" : "/esm"),
+          outDir: "../dist/src" + (oneType ? "" : "-esm"),
           rootDir: ".",
           target: "es5",
         },
