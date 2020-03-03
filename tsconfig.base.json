@@ -5,7 +5,10 @@
     "baseUrl": ".",
     "declaration": true,
     "esModuleInterop": true,
+    "jsx": "react",
+    "jsxFactory": "window.jsxFactory",
     "lib": [
+      "dom",
       "es2015"
     ],
     "moduleResolution": "node",
