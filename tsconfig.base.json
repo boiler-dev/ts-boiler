@@ -18,6 +18,7 @@
     ]
   },
   "exclude": [
-    "**/tsignore/*.ts"
+    "**/tsignore/*.ts",
+    "**/tsignore/*.tsx"
   ]
 }
