@@ -102,7 +102,7 @@ export const generate: GenerateBoiler = async ({
           rootDir: ".",
           target: "es5",
         },
-        extends: "../tsconfig-base.json",
+        extends: "../tsconfig.base.json",
       },
     })
   }
