@@ -1,9 +1,5 @@
 import { join } from "path"
-import {
-  GenerateBoiler,
-  PromptBoiler,
-  InstallBoiler,
-} from "boiler-dev"
+import { ActionBoiler, PromptBoiler } from "boiler-dev"
 
 export const prompt: PromptBoiler = async () => {
   return [
@@ -20,7 +16,7 @@ export const prompt: PromptBoiler = async () => {
   ]
 }
 
-export const install: InstallBoiler = async () => {
+export const install: ActionBoiler = async () => {
   const actions = []
 
   actions.push({
@@ -32,7 +28,7 @@ export const install: InstallBoiler = async () => {
   return actions
 }
 
-export const generate: GenerateBoiler = async ({
+export const generate: ActionBoiler = async ({
   answers,
   cwdPath,
   files,
