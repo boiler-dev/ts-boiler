@@ -42,7 +42,7 @@ export const generate: ActionBoiler = async ({
 
   actions.push({
     action: "write",
-    path: join(cwdPath, "boiler/tsconfig.json"),
+    path: "boiler/tsconfig.json",
     source: {
       compilerOptions: {
         composite: true,
@@ -62,10 +62,7 @@ export const generate: ActionBoiler = async ({
 
     actions.push({
       action: "write",
-      path: join(
-        cwdPath,
-        "src/tsconfig" + dotCjs + ".json"
-      ),
+      path: "src/tsconfig" + dotCjs + ".json",
       source: {
         compilerOptions: {
           composite: true,
@@ -86,10 +83,7 @@ export const generate: ActionBoiler = async ({
 
     actions.push({
       action: "write",
-      path: join(
-        cwdPath,
-        "src/tsconfig" + dotEsm + ".json"
-      ),
+      path: "src/tsconfig" + dotEsm + ".json",
       source: {
         compilerOptions: {
           composite: true,
@@ -103,19 +97,15 @@ export const generate: ActionBoiler = async ({
     })
   }
 
-  for (const file of files) {
-    if (file.name === "tsconfig.base.json") {
-      actions.push({
-        action: "write",
-        path: join(cwdPath, file.name),
-        source: file.source,
-      })
-    }
-  }
+  actions.push({
+    action: "write",
+    path: "tsconfig.base.json",
+    sourcePath: "tsconfig.base.json",
+  })
 
   actions.push({
     action: "write",
-    path: join(cwdPath, "tsconfig.json"),
+    path: "tsconfig.json",
     source: {
       compileOnSave: true,
       extends: "./tsconfig.base.json",
@@ -126,7 +116,7 @@ export const generate: ActionBoiler = async ({
 
   actions.push({
     action: "merge",
-    path: join(cwdPath, "package.json"),
+    path: "package.json",
     source: {
       scripts: {
         build: "tsc -b",
